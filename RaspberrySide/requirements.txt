@@ -1,0 +1,9 @@
+numpy>=1.26.0
+opencv-python>=4.8.1.78
+matplotlib>=3.7.1
+PyQt5>=5.15.9
+pygame>=2.5.2
+#bluerobotics-ping==0.1.0
+#adafruit-circuitpython-icm20x==2.2.0
+#pigpio==1.78
+
