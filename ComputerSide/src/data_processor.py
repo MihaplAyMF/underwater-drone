@@ -33,23 +33,30 @@ class DataProcessor:
                     if not isinstance(camera_data, str):
                         logger.error("Invalid camera data format")
                         return
-                    # Змінено на кольорове зображення
-                    frame = cv2.imdecode(np.frombuffer(base64.b64decode(camera_data), np.uint8), cv2.IMREAD_COLOR)
-                    if frame is not None:
-                        self.latest_frame = frame
-                        if self.parent.display_mode in ["camera", "both"]:
-                            height, width, channels = frame.shape
-                            qimage = QtGui.QImage(frame.data, width, height, width * channels, QtGui.QImage.Format_RGB888)
-                            pixmap = QtGui.QPixmap.fromImage(qimage).scaled(
-                                self.parent.camera_label.size(), QtCore.Qt.KeepAspectRatio
-                            )
-                            if self.parent.display_mode == "camera":
-                                self.parent.camera_label.setPixmap(pixmap)
-                            else:
-                                self.parent.both_camera_label.setPixmap(pixmap)
-                            logger.info("Updated camera frame")
-                    else:
+                    # Декодування зображення
+                    img_data = base64.b64decode(camera_data)
+                    frame = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)
+                    if frame is None:
                         logger.error("Failed to decode camera frame")
+                        return
+                    
+                    # Конвертація BGR в RGB
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    self.latest_frame = frame_rgb
+                    height, width, channels = frame_rgb.shape
+                    qimage = QtGui.QImage(frame_rgb.data, width, height, width * channels, QtGui.QImage.Format_RGB888)
+                    # Масштабування з урахуванням розміру віджета
+                    if self.parent.display_mode == "camera":
+                        pixmap = QtGui.QPixmap.fromImage(qimage).scaled(
+                            self.parent.camera_label.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation
+                        )
+                        self.parent.camera_label.setPixmap(pixmap)
+                    elif self.parent.display_mode == "both":
+                        pixmap = QtGui.QPixmap.fromImage(qimage).scaled(
+                            self.parent.both_camera_label.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation
+                        )
+                        self.parent.both_camera_label.setPixmap(pixmap)
+                    logger.info(f"Updated camera frame: {width}x{height}")
                 except cv2.error as e:
                     logger.error(f"OpenCV error: {e}")
                 except Exception as e:
@@ -92,7 +99,8 @@ class DataProcessor:
                 height, width, channels = self.latest_frame.shape
                 qimage = QtGui.QImage(self.latest_frame.data, width, height, width * channels, QtGui.QImage.Format_RGB888)
                 pixmap = QtGui.QPixmap.fromImage(qimage).scaled(
-                    self.parent.camera_label.size(), QtCore.Qt.KeepAspectRatio
+                    self.parent.camera_label.size() if self.parent.display_mode == "camera" else self.parent.both_camera_label.size(),
+                    QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation
                 )
                 if self.parent.display_mode == "camera":
                     self.parent.camera_label.setPixmap(pixmap)
