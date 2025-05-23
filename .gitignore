@@ -10,4 +10,4 @@ __pycache__/
 *.swp
 .venv/
 .env/
-
+RaspberrySide/drone_log.txt

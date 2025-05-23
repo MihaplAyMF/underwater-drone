@@ -1,5 +1,4 @@
 # mock/sonar.py
-
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 
@@ -20,6 +19,6 @@ class MockSonar:
 
         return {
             "point": detected_point.tolist(),
-            "distance": self.detection_distance
+            "distance": self.detection_distance,
+            "object_type": "empty"  # Заглушка, реальний тип визначається в main.py
         }
-

@@ -18,9 +18,9 @@ class MockCamera:
         
         # Generate a smooth gradient for depth effect (darker at bottom)
         for i in range(self.height):
-            blue = int(50 + 100 * (i / self.height))  # Darker blue at bottom
-            green = int(70 + 80 * (i / self.height))  # Greenish tint
-            frame[i, :] = [blue, green, 20]  # Small red component for balance
+            blue = int(50 + 100 * (i / self.height))
+            green = int(70 + 80 * (i / self.height))
+            frame[i, :] = [blue, green, 20]
 
         # Add noise to simulate sea floor texture
         noise = np.random.normal(0, 25, (self.height, self.width, 3)).astype(np.int16)
@@ -31,9 +31,9 @@ class MockCamera:
         for i in range(self.height):
             for j in range(self.width):
                 wave = int(10 * np.sin((j + self.frame_count) / 20.0) * np.cos(i / 30.0))
-                # Apply wave to each RGB channel individually
-                frame[i, j] = np.clip(frame[i, j].astype(np.int16) + wave, 0, 255).astype(np.uint8)
+                temp = frame[i, j].astype(np.int16) + wave
+                frame[i, j] = np.clip(temp, 0, 255).astype(np.uint8)
 
-        # Encode as JPEG with moderate quality
-        _, buffer = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
+        # Encode as JPEG with very low quality to reduce size
+        _, buffer = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 20])
         return base64.b64encode(buffer).decode('utf-8')

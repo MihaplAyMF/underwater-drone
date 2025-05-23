@@ -51,20 +51,4 @@ class Navigation:
         self.route.append(point)
         print(f"Added route point via input: {point}")
 
-# class Navigation:
-#     def __init__(self, network):
-#         self.network = network
-#         self.route = []
-#
-#     def on_map_click(self, visualizer, event):
-#         if visualizer.display_mode in ["sonar", "both"] and len(visualizer.points) > 0:
-#             last_point = visualizer.points[-1]
-#             self.route.append(last_point)
-#             print(f"Added route point: {last_point}")
-#
-#     def on_map_drag(self, visualizer, event):
-#         pass
-#
-#     def start_default_route(self, visualizer):
-#         visualizer.auto_mode = True
-#         print("Started default route")
+
