@@ -27,7 +27,7 @@
 
 ## 🖥️ Інтерфейс програми
 
-![Інтерфейс програми](https://github.com/MihaplAyMF/underwater-drone/Interface.png)
+![image](https://github.com/MihaplAyMF/underwater-drone/blob/master/Interface.png)
 
 **Опис інтерфейсу:**
 
@@ -39,9 +39,9 @@
 
 ## 🌊 Приклади візуалізації рельєфу
 
-![Приклад 1](https://github.com/MihaplAyMF/underwater-drone/Example1.jpg)
+![image](https://github.com/MihaplAyMF/underwater-drone/blob/master/Example1.jpg)
 
-![Приклад 1](https://github.com/MihaplAyMF/underwater-drone/Example2.jpg)
+![image](https://github.com/MihaplAyMF/underwater-drone/blob/master/Example2.jpg)
 
 ## ⚙️ Реалізовані можливості (прототип)
 
@@ -63,23 +63,6 @@
 
 - [ ] **Визначення типу рельєфу зображенням (CV/AI)**  
   Ця функція **не реалізована**, однак може бути додана при потребі — наприклад, через OpenCV або нейронні мережі.
-
-## 🗂️ Структура проєкту
-├── ComputerSide/ # Сторона ПК — візуалізація та логіка
-│ ├── main.py # Точка входу
-│ ├── src/
-│ │ ├── drone_visualizer.py # Головний клас візуалізації
-│ │ ├── map_utils.py # Завантаження та оновлення мапи
-│ │ ├── navigation.py # Навігація (ручна, автоматична)
-│ │ ├── input_handler.py # Обробка вводу
-│ │ ├── visualization.py # Побудова 3D карти
-│ │ └── ...
-│ └── terrain_map.csv # CSV-файл з точками рельєфу
-│
-├── RaspberrySide/ # Сторона дрона (Raspberry Pi)
-│ ├── main.py # Обробка даних з сенсорів
-│ ├── mock/ # Мок-реалізації сенсорів для тестування
-│ └── utils/logger.py # Логування
 
 ## 🛠️ Технології
 - **Python 3.11**
